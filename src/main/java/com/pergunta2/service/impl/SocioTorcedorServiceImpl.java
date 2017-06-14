@@ -13,6 +13,7 @@ import com.pergunta2.domain.AssociacaoDomain;
 import com.pergunta2.domain.CampanhaDomain;
 import com.pergunta2.domain.SocioTorcedorDomain;
 import com.pergunta2.entity.SocioTorcedorEntity;
+import com.pergunta2.exception.http.UnprocessableEntity;
 import com.pergunta2.fallbacks.ServicosFallBacks;
 import com.pergunta2.repository.SocioTorcedorRepository;
 import com.pergunta2.service.SocioTorcedorService;
@@ -25,7 +26,6 @@ import com.pergunta2.service.SocioTorcedorService;
  */
 @Service
 public class SocioTorcedorServiceImpl implements SocioTorcedorService {
-	private static final Logger logger = LoggerFactory.getLogger(SocioTorcedorServiceImpl.class);
 
 	private final SocioTorcedorRepository repository;
 	private final ServicosFallBacks servicosFallBacks;
@@ -37,7 +37,7 @@ public class SocioTorcedorServiceImpl implements SocioTorcedorService {
 	}
 
 	@Override
-	public List<CampanhaDomain> create(SocioTorcedorDomain socioTorcedor) throws Exception {
+	public List<CampanhaDomain> create(SocioTorcedorDomain socioTorcedor){
 		
 		if (Objects.isNull(existeSocioTorcedor(socioTorcedor.getEmail()))) {
 			SocioTorcedorEntity socio = new SocioTorcedorEntity();
@@ -51,7 +51,7 @@ public class SocioTorcedorServiceImpl implements SocioTorcedorService {
 			servicosFallBacks.listarCampanhasAtivas();
 		}
 			
-		throw new Exception("Sócio já cadastrado");
+		throw new UnprocessableEntity("Sócio já cadastrado");
 
 	}
 	
@@ -62,7 +62,7 @@ public class SocioTorcedorServiceImpl implements SocioTorcedorService {
 			AssociacaoDomain associacao = new AssociacaoDomain(socio.getId(), associacaoDomain.getCampanhaId());
 			associacaoDomain = servicosFallBacks.associarSocioCampanha(associacao);
 		}
-		return associacaoDomain;
+		throw new UnprocessableEntity("Sócio não cadastrado");
 	}
 
 	@Override

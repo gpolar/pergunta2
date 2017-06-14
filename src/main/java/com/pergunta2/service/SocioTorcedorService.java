@@ -15,7 +15,7 @@ import com.pergunta2.entity.SocioTorcedorEntity;
  */
 public interface SocioTorcedorService {
 
-	public List<CampanhaDomain> create(SocioTorcedorDomain socioTorcedorDomain) throws Exception ;
+	public List<CampanhaDomain> create(SocioTorcedorDomain socioTorcedorDomain);
 
 	public SocioTorcedorEntity existeSocioTorcedor(String email);
 	

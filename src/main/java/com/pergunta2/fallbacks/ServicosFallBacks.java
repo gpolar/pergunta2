@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.VndErrors.VndError;
 import org.springframework.stereotype.Component;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.pergunta2.domain.AssociacaoDomain;
 import com.pergunta2.domain.CampanhaDomain;
+import com.pergunta2.exception.http.BadRequestEntity;
 import com.pergunta2.service.CampanhaService;
 
 /**
@@ -30,7 +30,7 @@ public class ServicosFallBacks {
 	}
 
 	public List<CampanhaDomain> erroConexaoCampanhaList() {
-		return new ArrayList<CampanhaDomain>();
+		throw new BadRequestEntity("Nao foi possivel estabelecer a conexão");
 	}
 	
 	@HystrixCommand(fallbackMethod = "erroConexaoAssociacaoList")
@@ -48,7 +48,7 @@ public class ServicosFallBacks {
 	}
 
 	public AssociacaoDomain erroConexaoAssociacaoAdd(AssociacaoDomain associacaoDomain) {
-		return new AssociacaoDomain();
+		throw new BadRequestEntity("Nao foi possivel estabelecer a conexão");
 	}
 
 }
