@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.pergunta2.domain.AssociacaoDomain;
 import com.pergunta2.domain.CampanhaDomain;
-import com.pergunta2.exception.http.BadRequestEntity;
 import com.pergunta2.service.CampanhaService;
 
 /**
@@ -30,7 +29,7 @@ public class ServicosFallBacks {
 	}
 
 	public List<CampanhaDomain> erroConexaoCampanhaList() {
-		throw new BadRequestEntity("Nao foi possivel estabelecer a conexão");
+		return null;
 	}
 	
 	@HystrixCommand(fallbackMethod = "erroConexaoAssociacaoList")
@@ -39,7 +38,7 @@ public class ServicosFallBacks {
 	}
 
 	public List<AssociacaoDomain> erroConexaoAssociacaoList(String socioId) {
-		return new ArrayList<AssociacaoDomain>();
+		return null;
 	}
 	
 	@HystrixCommand(fallbackMethod = "erroConexaoAssociacaoAdd")
@@ -48,7 +47,7 @@ public class ServicosFallBacks {
 	}
 
 	public AssociacaoDomain erroConexaoAssociacaoAdd(AssociacaoDomain associacaoDomain) {
-		throw new BadRequestEntity("Nao foi possivel estabelecer a conexão");
+		return null;
 	}
 
 }

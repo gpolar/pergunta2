@@ -1,11 +1,14 @@
 package com.pergunta2.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pergunta2.domain.CampanhaDomain;
 import com.pergunta2.domain.SocioTorcedorDomain;
 import com.pergunta2.service.SocioTorcedorService;
 
@@ -36,7 +39,7 @@ public class SocioTorcedorControllerImpl {
 	 * Método que adiciona um socio torcedor
 	 * 
 	 * @param associacaoDomain
-	 * @return AssociacaoDomain
+	 * @return List<CampanhaDomain>
 	 * @throws Exception 
 	 */
 	@PostMapping
@@ -44,8 +47,8 @@ public class SocioTorcedorControllerImpl {
     @ApiResponses(value = {
     		@ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 201, message = "Socio Torcedor Cadastrado") })
-	public void adicionar(@RequestBody SocioTorcedorDomain socio){
-		socioService.create(socio);
+	public List<CampanhaDomain> adicionar(@RequestBody SocioTorcedorDomain socio){
+		return socioService.create(socio);
 	}
 
 }

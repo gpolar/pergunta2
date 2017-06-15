@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +37,9 @@ public class SocioTorcedorServiceImpl implements SocioTorcedorService {
 	@Override
 	public List<CampanhaDomain> create(SocioTorcedorDomain socioTorcedor){
 		
-		if (Objects.isNull(existeSocioTorcedor(socioTorcedor.getEmail()))) {
+		SocioTorcedorEntity socioEntity = existeSocioTorcedor(socioTorcedor.getEmail());
+		
+		if (Objects.isNull(socioEntity)) {
 			SocioTorcedorEntity socio = new SocioTorcedorEntity();
 			socio.setEmail(socioTorcedor.getEmail());
 			socio.setDataNascimento(socioTorcedor.getDataNascimento());
@@ -47,11 +47,16 @@ public class SocioTorcedorServiceImpl implements SocioTorcedorService {
 			socio.setTime(socioTorcedor.getTime());
 			repository.save(socio);
 			return new ArrayList<CampanhaDomain>();
-		}else{
-			servicosFallBacks.listarCampanhasAtivas();
+		}
+		
+		List<AssociacaoDomain> associados = servicosFallBacks.listarAssociados(socioEntity.getId());
+		if(Objects.isNull(associados) || associados.size()==0){
+			List<CampanhaDomain> lista = servicosFallBacks.listarCampanhasAtivas();
+			if(Objects.isNull(lista)) throw new UnprocessableEntity("Nao existe campanhas ativas");
+			return lista;
 		}
 			
-		throw new UnprocessableEntity("Sócio já cadastrado");
+		throw new UnprocessableEntity("Socio já registrado");
 
 	}
 	
@@ -61,6 +66,7 @@ public class SocioTorcedorServiceImpl implements SocioTorcedorService {
 		if (Objects.nonNull(socio)) {
 			AssociacaoDomain associacao = new AssociacaoDomain(socio.getId(), associacaoDomain.getCampanhaId());
 			associacaoDomain = servicosFallBacks.associarSocioCampanha(associacao);
+			if(Objects.nonNull(associacaoDomain)) return associacaoDomain;
 		}
 		throw new UnprocessableEntity("Sócio não cadastrado");
 	}
