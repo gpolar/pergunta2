@@ -20,8 +20,8 @@ import io.swagger.annotations.ApiResponses;
  * @author: Gustavo Polar gpolars@gmail.com, contato@gustavopolarsa.com
  */
 @RestController
-@RequestMapping("/associacao")
-@Api(basePath = "/associacao", value = "Associacao", description = "Funcoes de associacao", produces = "application/json")
+@RequestMapping("/associarsocio")
+@Api(basePath = "/associarsocio", value = "Associacao", description = "Funcoes de associacao", produces = "application/json")
 public class AssociacaoControllerImpl{
 
 	
