@@ -17,8 +17,7 @@ import com.pergunta2.repository.SocioTorcedorRepository;
 import com.pergunta2.service.SocioTorcedorService;
 
 /**
- * Esta classe tem a logica dos metodos implementados em
- * SocioTorcedorService
+ * Esta classe tem a logica dos metodos implementados em SocioTorcedorService
  * 
  * @author: Gustavo Polar gpolars@gmail.com, contato@gustavopolarsa.com
  */
@@ -27,18 +26,18 @@ public class SocioTorcedorServiceImpl implements SocioTorcedorService {
 
 	private final SocioTorcedorRepository repository;
 	private final ServicosFallBacks servicosFallBacks;
-	
+
 	@Autowired
-	SocioTorcedorServiceImpl(SocioTorcedorRepository repository,ServicosFallBacks servicosFallBacks) {
+	SocioTorcedorServiceImpl(SocioTorcedorRepository repository, ServicosFallBacks servicosFallBacks) {
 		this.repository = repository;
 		this.servicosFallBacks = servicosFallBacks;
 	}
 
 	@Override
-	public List<CampanhaDomain> create(SocioTorcedorDomain socioTorcedor){
-		
+	public List<CampanhaDomain> create(SocioTorcedorDomain socioTorcedor) {
+
 		SocioTorcedorEntity socioEntity = existeSocioTorcedor(socioTorcedor.getEmail());
-		
+
 		if (Objects.isNull(socioEntity)) {
 			SocioTorcedorEntity socio = new SocioTorcedorEntity();
 			socio.setEmail(socioTorcedor.getEmail());
@@ -48,25 +47,27 @@ public class SocioTorcedorServiceImpl implements SocioTorcedorService {
 			repository.save(socio);
 			return new ArrayList<CampanhaDomain>();
 		}
-		
+
 		List<AssociacaoDomain> associados = servicosFallBacks.listarAssociados(socioEntity.getId());
-		if(Objects.isNull(associados) || associados.size()==0){
+		if (Objects.isNull(associados) || associados.size() == 0) {
 			List<CampanhaDomain> lista = servicosFallBacks.listarCampanhasAtivas();
-			if(Objects.isNull(lista)) throw new UnprocessableEntity("Nao existe campanhas ativas");
+			if (Objects.isNull(lista) || lista.size() == 0)
+				throw new UnprocessableEntity("Nao existe campanhas ativas");
 			return lista;
 		}
-			
+
 		throw new UnprocessableEntity("Socio já registrado");
 
 	}
-	
+
 	@Override
 	public AssociacaoDomain associarSocioCampanha(AssociacaoDomain associacaoDomain) {
 		SocioTorcedorEntity socio = repository.findOne(associacaoDomain.getSocioId());
 		if (Objects.nonNull(socio)) {
 			AssociacaoDomain associacao = new AssociacaoDomain(socio.getId(), associacaoDomain.getCampanhaId());
 			associacaoDomain = servicosFallBacks.associarSocioCampanha(associacao);
-			if(Objects.nonNull(associacaoDomain)) return associacaoDomain;
+			if (Objects.nonNull(associacaoDomain))
+				return associacaoDomain;
 		}
 		throw new UnprocessableEntity("Sócio não cadastrado");
 	}
