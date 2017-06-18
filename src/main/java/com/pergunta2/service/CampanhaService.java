@@ -15,7 +15,7 @@ import com.pergunta2.domain.CampanhaDomain;
  * Esta classe contem a interface da entidade para comunicação com o servico de
  * campanha e associacao
  * 
- * @author: Gustavo Polar gpolars@gmail.com, contato@gustavopolarsa.com
+ * @author: Gustavo Polar gpolars@gmail.com, contact@gustavopolarsa.com
  */
 @FeignClient(name = "campanhaService", url = "http://localhost:8080")
 public interface CampanhaService {

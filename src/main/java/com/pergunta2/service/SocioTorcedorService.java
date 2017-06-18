@@ -11,7 +11,7 @@ import com.pergunta2.entity.SocioTorcedorEntity;
  * Esta classe contem a interface de serviço relacionado com os procedimentos de
  * socio torcedor
  * 
- * @author: Gustavo Polar gpolars@gmail.com, contato@gustavopolarsa.com
+ * @author: Gustavo Polar gpolars@gmail.com, contact@gustavopolarsa.com
  */
 public interface SocioTorcedorService {
 
