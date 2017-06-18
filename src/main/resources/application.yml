@@ -8,8 +8,8 @@ spring:
     data:
         mongodb:
             database: socio-torcedor
-            host: 104.198.77.67  //utilizar localhost para local
-            port: 27017
+            host: 104.198.77.67
+            port: 27019
     application:
        name: socio-torcedor-service
     freemarker:
