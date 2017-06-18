@@ -14,11 +14,10 @@ import com.pergunta2.convert.ParseDeserializer;
  * 
  * @author: Gustavo Polar gpolars@gmail.com, contact@gustavopolarsa.com
  */
-public class SocioTorcedorDomain implements Serializable {
+public class BaseSocioTorcedorDomain implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	private String id;
+
 	private String nomeCompleto;
 
 	private String email;
@@ -26,15 +25,14 @@ public class SocioTorcedorDomain implements Serializable {
 	@JsonDeserialize(using = ParseDeserializer.class)
 	private LocalDate dataNascimento;
 
-	private Long time;
+	private Integer time;
 
-	public SocioTorcedorDomain() {
+	public BaseSocioTorcedorDomain() {
 
 	}
 
-	public SocioTorcedorDomain(String id,String nomeCompleto, String email, LocalDate dataNascimento, Long time) {
+	public BaseSocioTorcedorDomain(String nomeCompleto, String email, LocalDate dataNascimento, Integer time) {
 		super();
-		this.id = id;
 		this.nomeCompleto = nomeCompleto;
 		this.email = email;
 		this.dataNascimento = dataNascimento;
@@ -65,20 +63,12 @@ public class SocioTorcedorDomain implements Serializable {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public Long getTime() {
+	public Integer getTime() {
 		return time;
 	}
 
-	public void setTime(Long time) {
+	public void setTime(Integer time) {
 		this.time = time;
 	}
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-	
 }

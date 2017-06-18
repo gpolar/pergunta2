@@ -5,6 +5,7 @@ import java.util.List;
 import com.pergunta2.domain.AssociacaoDomain;
 import com.pergunta2.domain.CampanhaDomain;
 import com.pergunta2.domain.SocioTorcedorDomain;
+import com.pergunta2.domain.BaseSocioTorcedorDomain;
 import com.pergunta2.entity.SocioTorcedorEntity;
 
 /**
@@ -15,7 +16,9 @@ import com.pergunta2.entity.SocioTorcedorEntity;
  */
 public interface SocioTorcedorService {
 
-	public List<CampanhaDomain> create(SocioTorcedorDomain socioTorcedorDomain);
+	public List<CampanhaDomain> create(BaseSocioTorcedorDomain socioTorcedorDomain);
+	
+	public List<SocioTorcedorDomain> listar();
 
 	public SocioTorcedorEntity existeSocioTorcedor(String email);
 	

@@ -16,7 +16,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.pergunta2.domain.AssociacaoDomain;
 import com.pergunta2.domain.CampanhaDomain;
-import com.pergunta2.domain.SocioTorcedorDomain;
+import com.pergunta2.domain.BaseSocioTorcedorDomain;
 import com.pergunta2.entity.SocioTorcedorEntity;
 import com.pergunta2.fallbacks.ServicosFallBacks;
 import com.pergunta2.repository.SocioTorcedorRepository;
@@ -36,7 +36,7 @@ public class SocioTorcedorServiceTest {
 	
 	@Test
 	public void createTest(){
-		SocioTorcedorDomain socioTorcedorDomain = new SocioTorcedorDomain("Gustavo","gpolar@gmail.com",LocalDate.now(),5);
+		BaseSocioTorcedorDomain socioTorcedorDomain = new BaseSocioTorcedorDomain("Gustavo","gpolar@gmail.com",LocalDate.now(),5);
 		SocioTorcedorEntity socioTorcedorEntity = new SocioTorcedorEntity();
 		List<CampanhaDomain> campanhaDomain = new ArrayList<>();
 		campanhaDomain.add(new CampanhaDomain("abc", "campanha1", 4, LocalDate.now()));

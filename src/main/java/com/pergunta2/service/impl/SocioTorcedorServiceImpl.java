@@ -3,6 +3,7 @@ package com.pergunta2.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.pergunta2.domain.AssociacaoDomain;
 import com.pergunta2.domain.CampanhaDomain;
 import com.pergunta2.domain.SocioTorcedorDomain;
+import com.pergunta2.domain.BaseSocioTorcedorDomain;
 import com.pergunta2.entity.SocioTorcedorEntity;
 import com.pergunta2.exception.http.UnprocessableEntity;
 import com.pergunta2.fallbacks.ServicosFallBacks;
@@ -34,7 +36,7 @@ public class SocioTorcedorServiceImpl implements SocioTorcedorService {
 	}
 
 	@Override
-	public List<CampanhaDomain> create(SocioTorcedorDomain socioTorcedor) {
+	public List<CampanhaDomain> create(BaseSocioTorcedorDomain socioTorcedor) {
 
 		SocioTorcedorEntity socioEntity = existeSocioTorcedor(socioTorcedor.getEmail());
 
@@ -77,5 +79,12 @@ public class SocioTorcedorServiceImpl implements SocioTorcedorService {
 		SocioTorcedorEntity socioTorcedor = repository.findByEmail(email).orElse(null);
 		return socioTorcedor;
 	}
+
+	@Override
+	public List<SocioTorcedorDomain> listar() {
+		return repository.findAll().stream().map(x-> new SocioTorcedorDomain(x.getId(),x.getNomeCompleto(), x.getEmail(), x.getDataNascimento(),  x.getTime())).collect(Collectors.toList());
+	}
+	
+	
 
 }
